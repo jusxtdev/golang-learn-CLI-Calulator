@@ -1,11 +1,11 @@
 # CLI Calculator in Golang
 ## Usage
 ```
-go run main.go [options]
+go run app/main.go [options]
 ```
 OR
 ```
-go build main.go
+go build app/main.go
 ./main [options]
 ```
 ## Options
