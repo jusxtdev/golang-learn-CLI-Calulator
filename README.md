@@ -1,5 +1,4 @@
 # CLI Calculator in Golang
----
 ## Usage
 ```
 go run main.go [options]
@@ -10,6 +9,7 @@ go build main.go
 ./main [options]
 ```
 ## Options
+```
 -add      : 	Perform addition of two nums    
 -subtract :   Perform subtraction of two nums     
 -multiply :   Perform multiplication of two nums     
@@ -17,3 +17,4 @@ go build main.go
 -division :   Perform division     
 -help     :   This option     
 -motivate :   Get Motivated !!      
+```
