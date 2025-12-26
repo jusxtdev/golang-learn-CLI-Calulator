@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"math"
+	"math/rand/v2"
 )
 
 // take operation as flag input
@@ -27,6 +29,31 @@ func floor_func(x, y int) int {
 	return x / y
 }
 
+func divide_func(x, y int) float64 {
+	return float64(x) / float64(y)
+}
+
+func motivate_func() {
+	quotes := map[int]string{
+		1: `"Mathematics is not about numbers, equations, computations, or algorithms: it is about understanding." - William Paul Thurston`,
+		2: `"Pure mathematics is, in its way, the poetry of logical ideas." - Albert Einstein`,
+		3: `"Mathematics knows no races or geographic boundaries; for mathematics, the cultural world is one country." - David Hilbert`,
+		4: `"The only way to learn mathematics is to do mathematics." - Paul Halmos`,
+		5: `"In mathematics, you don't understand things. You just get used to them." - John von Neumann`,
+	}
+	max := 5
+	min := 0
+	quote_num := rand.IntN(max-min+1) + min
+	fmt.Println(quotes[quote_num])
+}
+
+func int_input() int {
+	fmt.Println("Enter number :")
+	var x int
+	fmt.Scanln(&x)
+	return x
+}
+
 func main() {
 
 	//define flags
@@ -34,25 +61,54 @@ func main() {
 	subtract := flag.Bool("subtract", false, "Subtract two numbers")
 	multiply := flag.Bool("multiply", false, "Multiply two numbers")
 	floor := flag.Bool("floor", false, "floor value of division of two numbers")
-	//help := flag.Bool("help", false, "Usage help")
-	//motivate := flag.String("name", "Young Man", "Get Motivated !!")
+	divide := flag.Bool("divide", false, "Division of two numbers")
+	help := flag.Bool("help", false, "Usage help")
+	motivate := flag.Bool("motivate", false, "Get Motivated !!")
 
-	options := map[int]func(int, int) int{
-		1: add_func,
-		2: subtract_func,
-		3: multiply_func,
-		4: floor_func,
-	}
+	//Parse flags
+	flag.Parse()
 
-	result := 0
-	if *add {
-		result = options[1](1, 2)
-	} else if *subtract {
-		result = options[2](1, 2)
-	} else if *multiply {
-		result = options[3](1, 22)
-	} else if *floor {
-		result = options[4](23, 9)
+	math_opr := *add || *subtract || *multiply || *floor || *divide
+
+	if math_opr {
+		// math operations
+
+		// Take user input
+		x := int_input()
+		y := int_input()
+		result := 0.0
+
+		if *add {
+			result = float64(add_func(x, y))
+		} else if *subtract {
+			result = float64(subtract_func(x, y))
+		} else if *multiply {
+			result = float64(multiply_func(x, y))
+		} else if *floor {
+			result = float64(floor_func(x, y))
+		} else if *divide {
+			result = float64(divide_func(x, y))
+		}
+		fmt.Println("Answer", math.Round(result*100)/100)
+	} else if *help {
+		//help statemtn
+		help_str := `
+Usage :
+	./main [options]
+Options :
+	-add      : 	Perform addition of two nums
+	-subtract :   Perform subtraction of two nums
+	-multiply :   Perform multiplication of two nums
+	-floor    :   Perform division of two nums and print it's floor value
+	-division :   Perform division
+	-help     :   This option
+	-motivate :   Get Motivated !!
+`
+		fmt.Println(help_str)
+	} else if *motivate {
+		// motivate
+		motivate_func()
+	} else {
+		fmt.Println("No flag Provided\nTry -help")
 	}
-	fmt.Println("Answer", result)
 }
